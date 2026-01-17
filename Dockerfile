@@ -1,21 +1,14 @@
-# ===== ビルド用 =====
+# ===== build stage =====
 FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
-
 COPY pom.xml .
 RUN mvn dependency:go-offline
-
 COPY src ./src
 RUN mvn package -DskipTests
 
-# ===== 実行用 =====
-FROM eclipse-temurin:17-jre
-WORKDIR /app
-
-COPY --from=build /app/target/*.war app.war
-
-# Render は PORT 環境変数でポートを渡す
-ENV PORT=8080
+# ===== runtime stage =====
+FROM tomcat:10.1-jdk17
+RUN rm -rf /usr/local/tomcat/webapps/*
+COPY --from=build /app/target/*.war /usr/local/tomcat/webapps/ROOT.war
 EXPOSE 8080
-
-CMD ["java", "-jar", "app.war"]
+CMD ["catalina.sh", "run"]
