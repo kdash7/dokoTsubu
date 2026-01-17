@@ -5,39 +5,40 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+
 
 public class UserDAO {
+
+	// DB接続確認
+    private static final String JDBC_URL =
+        "jdbc:h2:mem:dokoTsubu;DB_CLOSE_DELAY=-1";
+    private static final String DB_USER = "sa";
+    private static final String DB_PASS = "";
 
     static {
         try {
             Class.forName("org.h2.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+
+            Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+            Statement stmt = conn.createStatement();
+
+            // テーブルがなければ作る
+            stmt.execute("""
+                CREATE TABLE IF NOT EXISTS users (
+                    name VARCHAR(100) PRIMARY KEY,
+                    pass VARCHAR(100)
+                )
+            """);
+
+            stmt.close();
+            conn.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
-	
-    // DB接続情報
-    private static final String JDBC_URL = "jdbc:h2:file:./dokotsubu\n";
-    private static final String DB_USER = "sa";
-    private static final String DB_PASS = "";
 
-    // ユーザー名が既に存在するか確認
-    public boolean existsByName(String name) {
-
-        String sql = "SELECT COUNT(*) FROM USERS WHERE NAME = ?";
-
-        try (
-            Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
-            PreparedStatement pstmt = conn.prepareStatement(sql)
-        ) {
-            pstmt.setString(1, name);
-            ResultSet rs = pstmt.executeQuery();
-            return rs.next() && rs.getInt(1) > 0;
-         } catch (SQLException e) {
-             e.printStackTrace();
-             return false;
-         }
-     }
 
     // ユーザー登録
     public boolean create(User user) {
@@ -78,9 +79,10 @@ public class UserDAO {
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
+                System.out.println("ログイン成功");
                 return new User(rs.getString("name"), rs.getString("pass"));
             }
-            System.out.println("ログイン成功");
+            System.out.println("ログイン失敗");
 
         } catch (SQLException e) {
             e.printStackTrace();
