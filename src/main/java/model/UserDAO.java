@@ -39,6 +39,28 @@ public class UserDAO {
         }
     }
 
+    // ユーザー名が既に存在するか確認
+    public boolean existsByName(String name) {
+
+        String sql = "SELECT COUNT(*) FROM users WHERE name = ?";
+
+        try (
+            Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+            PreparedStatement pstmt = conn.prepareStatement(sql)
+        ) {
+            pstmt.setString(1, name);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 
     // ユーザー登録
     public boolean create(User user) {
