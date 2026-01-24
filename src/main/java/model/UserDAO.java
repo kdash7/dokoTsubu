@@ -8,9 +8,11 @@ import java.sql.SQLException;
 
 public class UserDAO {
 
-    // DB接続確認
+    // データベース接続に使用する情報
     private static final String JDBC_URL =
-            "jdbc:h2:tcp://localhost/~/dokoTsubu";
+            System.getenv("JDBC_URL") != null
+                ? System.getenv("JDBC_URL")
+                : "jdbc:h2:tcp://localhost/~/dokoTsubu";
 
     private static final String DB_USER = "sa";
     private static final String DB_PASS = "";
