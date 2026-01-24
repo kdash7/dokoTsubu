@@ -26,8 +26,10 @@ public class Main extends HttpServlet {
         System.out.println("★★ MuttersDAO 強制初期化 ★★");
     }
     
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    // つぶやきリストを取得して、リクエストスコープに保存
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+
+        // つぶやきリストを取得して、リクエストスコープに保存
         GetMutterListLogic getMutterListLogic = new GetMutterListLogic();
         List<Mutter> mutterList = getMutterListLogic.execute();
         request.setAttribute("mutterList", mutterList);
@@ -42,12 +44,15 @@ public class Main extends HttpServlet {
             response.sendRedirect("index.jsp");
         } else { // ログイン済み
             // フォワード
-            RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/main.jsp");
+            RequestDispatcher dispatcher =
+                    request.getRequestDispatcher("WEB-INF/jsp/main.jsp");
             dispatcher.forward(request, response);
         }
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
         // リクエストパラメータの取得
         request.setCharacterEncoding("UTF-8");
         String text = request.getParameter("text");
@@ -59,7 +64,7 @@ public class Main extends HttpServlet {
             User loginUser = (User) session.getAttribute("loginUser");
 
             // つぶやきを作成してつぶやきリストに追加
-            Mutter mutter = new Mutter(loginUser.getName(), text);
+            Mutter mutter = new Mutter(loginUser.getId(), text);
             PostMutterLogic postMutterLogic = new PostMutterLogic();
             postMutterLogic.execute(mutter);
         } else {
@@ -73,7 +78,8 @@ public class Main extends HttpServlet {
         request.setAttribute("mutterList", mutterList);
 
         // メイン画面にフォワード
-        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/main.jsp");
+        RequestDispatcher dispatcher =
+                request.getRequestDispatcher("WEB-INF/jsp/main.jsp");
         dispatcher.forward(request, response);
     }
 }

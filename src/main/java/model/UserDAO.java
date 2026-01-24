@@ -5,47 +5,24 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-
 
 public class UserDAO {
 
-	// DB接続確認
+    // DB接続確認
     private static final String JDBC_URL =
-        "jdbc:h2:mem:dokoTsubu;DB_CLOSE_DELAY=-1";
+            "jdbc:h2:tcp://localhost/~/dokoTsubu";
+
     private static final String DB_USER = "sa";
     private static final String DB_PASS = "";
-
-    static {
-        try {
-            Class.forName("org.h2.Driver");
-
-            Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
-            Statement stmt = conn.createStatement();
-
-            // テーブルがなければ作る
-            stmt.execute("""
-                CREATE TABLE IF NOT EXISTS users (
-                    name VARCHAR(100) PRIMARY KEY,
-                    pass VARCHAR(100)
-                )
-            """);
-
-            stmt.close();
-            conn.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     // ユーザー名が既に存在するか確認
     public boolean existsByName(String name) {
 
-        String sql = "SELECT COUNT(*) FROM users WHERE name = ?";
+        String sql = "SELECT COUNT(*) FROM USERS WHERE NAME = ?";
 
         try (
-            Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+            Connection conn =
+                    DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
             PreparedStatement pstmt = conn.prepareStatement(sql)
         ) {
             pstmt.setString(1, name);
@@ -68,7 +45,8 @@ public class UserDAO {
         String sql = "INSERT INTO USERS(NAME, PASS) VALUES(?, ?)";
 
         try (
-                Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+                Connection conn =
+                        DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
                 PreparedStatement pstmt = conn.prepareStatement(sql)
             ) {
                 pstmt.setString(1, user.getName());
@@ -86,23 +64,29 @@ public class UserDAO {
         
         System.out.println("ログインSQL実行");
 
-        String sql = "SELECT name, pass FROM users WHERE name = ? AND pass = ?";
+        String sql
+            = "SELECT ID, NAME, PASS FROM USERS WHERE NAME = ? AND PASS = ?";
         try (
-            Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+            Connection conn =
+                    DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
             PreparedStatement pstmt = conn.prepareStatement(sql)
         ) {
             pstmt.setString(1, name);
             pstmt.setString(2, pass);
 
-
-            System.out.println("SQL name=" + name);
-            System.out.println("SQL pass=" + pass);
+            System.out.println("SQL NAME=" + name);
+            System.out.println("SQL PASS=" + pass);
 
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
                 System.out.println("ログイン成功");
-                return new User(rs.getString("name"), rs.getString("pass"));
+                return new User(
+                    rs.getInt("ID"),
+                    rs.getString("NAME"),
+                    rs.getString("PASS")
+                );
+
             }
             System.out.println("ログイン失敗");
 

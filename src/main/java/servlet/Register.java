@@ -18,19 +18,20 @@ public class Register extends HttpServlet {
 
     // ユーザー登録画面表示
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
+            throws ServletException, IOException {
 
-    	System.out.println("★★ Register.doGet 到達 ★★");
-    	
+        System.out.println("★★ Register.doGet 到達 ★★");
+
         // 登録画面へフォワード
-        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/registerView.jsp");
+        RequestDispatcher dispatcher =
+                request.getRequestDispatcher("WEB-INF/jsp/registerView.jsp");
         dispatcher.forward(request, response);
     }
 
     // ユーザー登録処理
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    	
+            throws ServletException, IOException {
+
         request.setCharacterEncoding("UTF-8");
 
         // 入力値取得
@@ -51,11 +52,11 @@ public class Register extends HttpServlet {
             request.setAttribute("errorMsg", errorMsg);
             request.setAttribute("name", name); // 入力保持（任意）
             RequestDispatcher dispatcher =
-                request.getRequestDispatcher("WEB-INF/jsp/registerView.jsp");
+                    request.getRequestDispatcher("WEB-INF/jsp/registerView.jsp");
             dispatcher.forward(request, response);
             return;
         }
-        
+
         // User 作成
         User user = new User(name, pass);
 
@@ -68,7 +69,8 @@ public class Register extends HttpServlet {
         request.setAttribute("user", user);
 
         // 結果画面へ
-        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/registerResult.jsp");
+        RequestDispatcher dispatcher =
+                request.getRequestDispatcher("WEB-INF/jsp/registerResult.jsp");
         dispatcher.forward(request, response);
     }
 }

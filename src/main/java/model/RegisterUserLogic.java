@@ -3,7 +3,7 @@ package model;
 public class RegisterUserLogic {
 
     public boolean execute(User user) {
-    	
+
         System.out.println("★★ RegisterUserLogic.execute 開始 ★★");
         System.out.println("name=" + user.getName());
 

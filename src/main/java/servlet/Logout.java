@@ -12,16 +12,18 @@ import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/Logout")
 public class Logout extends HttpServlet {
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
     
-    // セッションスコープを破棄
-    HttpSession session = request.getSession();
-    session.invalidate();
+        // セッションスコープを破棄
+        HttpSession session = request.getSession();
+        session.invalidate();
 
-    // ログアウト画面にフォワード
-    RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/logout.jsp");
-    dispatcher.forward(request, response);
-  }
+        // ログアウト画面にフォワード
+        RequestDispatcher dispatcher =
+                request.getRequestDispatcher("WEB-INF/jsp/logout.jsp");
+        dispatcher.forward(request, response);
+    }
 }

@@ -1,15 +1,12 @@
-# Maven
-target/
-build/
+# H2 database
+*.mv.db
+*.trace.db
 
-# Eclipse
+# build
+/target
+/bin
+
+# IDE
 .classpath
 .project
-.settings/
-
-# Logs
-*.log
-
-# OS
-.DS_Store
-Thumbs.db
+.settings
