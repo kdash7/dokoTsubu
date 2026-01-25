@@ -8,14 +8,21 @@ import java.sql.SQLException;
 
 public class UserDAO {
 
-    // データベース接続に使用する情報
+    // データベース接続に使用する情報(ローカル,Render両用)
     private static final String JDBC_URL =
-            System.getenv("JDBC_URL") != null
-                ? System.getenv("JDBC_URL")
-                : "jdbc:h2:tcp://localhost/~/dokoTsubu";
+        System.getenv("DB_URL") != null
+            ? System.getenv("DB_URL")
+            : "jdbc:h2:mem:dokotsubu;DB_CLOSE_DELAY=-1";
 
-    private static final String DB_USER = "sa";
-    private static final String DB_PASS = "";
+    private static final String DB_USER =
+        System.getenv("DB_USER") != null
+            ? System.getenv("DB_USER")
+            : "sa";
+
+    private static final String DB_PASS =
+        System.getenv("DB_PASS") != null
+            ? System.getenv("DB_PASS")
+            : "";
 
     // ユーザー名が既に存在するか確認
     public boolean existsByName(String name) {
