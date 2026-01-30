@@ -23,8 +23,8 @@ Java / Servlet / JSP を用いた MVC 構成で、基本的な Web アプリケ�
 
 ### データベース
 - H2 Database  
-  - ローカル環境：fileモード  
-  - デモ環境：memモード
+ - ローカル環境：fileモード  
+ - デモ環境：memモード
 
 ### 開発環境・ツール
 - Eclipse（Pleiades）
@@ -56,24 +56,24 @@ Java / Servlet / JSP を用いた MVC 構成で、基本的な Web アプリケ�
 1. このリポジトリをクローンします。
    ```bash
    git clone https://github.com/kdash7/dokoTsubu.git
-Eclipseで「既存のMavenプロジェクト」としてインポートします。
+2. Eclipseで「既存のMavenプロジェクト」としてインポートします。
 
-Tomcat 10 をサーバーとして設定し、プロジェクトを追加します。
+3. Tomcat 10 をサーバーとして設定し、プロジェクトを追加します。
 
-Eclipseからサーバーを起動します。
+4. Eclipseからサーバーを起動します。
 
-ブラウザで以下のURLにアクセスします。
-
+5. ブラウザで以下のURLにアクセスします。
 http://localhost:8080/dokoTsubu/
-ユーザー登録後、ログインして利用できます。
 
-補足
+6. ユーザー登録後、ログインして利用できます。
+
+### 補足
 ローカル環境では H2 Database（fileモード）を使用しています。
 
 アプリケーション起動時に ServletContextListener により
 データベースおよびテーブルが自動作成されます。
 
-工夫した点・学んだこと
+## 工夫した点・学んだこと
 H2 Database の mem / file モード切り替えによる環境差異への対応
 
 ServletContextListener を用いたDB初期化処理の実装
@@ -82,6 +82,6 @@ Maven・Tomcat・JDBC の連携時に発生するクラスローダ問題への�
 
 MVC構成を意識した責務分離（Servlet / Logic / DAO）
 
-補足
+### 補足
 本アプリは学習目的で作成したものであり、
 面接時にはローカル環境での実行・コード説明を想定しています。
