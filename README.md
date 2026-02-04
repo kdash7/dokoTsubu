@@ -51,9 +51,9 @@ dokoTsubu
 │　 └─ main  
 │　　　 ├─ java  
 │　　　 │　 ├─ dao  
-│　　　 │　 │　 └─ MuttersDAO.java        // DBアクセス処理  
+│　　　 │　 │　 └─ MuttersDAO.java　　　　// DBアクセス処理  
 │　　　 │　 ├─ listener  
-│　　　 │　 │　 └─ DBInitListener.java    // DB初期化（起動時）  
+│　　　 │　 │　 └─ DBInitListener.java　　// DB初期化（起動時）  
 │　　　 │　 ├─ model  
 │　　　 │　 ├─ GetMutterListLogic.java  
 │　　　 │　 │　 ├─ LoginLogic.java  
@@ -72,7 +72,7 @@ dokoTsubu
 │　　　 ├─ webapp  
 │　　　 │　 ├─ META-INF  
 │　　　 │　 ├─ WEB-INF  
-│　　　 │　 │　 ├─ jsp                    // 画面表示（JSP）  
+│　　　 │　 │　 ├─ jsp　　　　　　　　　　// 画面表示（JSP）  
 │　　　 │　 │　 │　 ├─ loginResult.jsp  
 │　　　 │　 │　 │　 ├─ logout.jsp  
 │　　　 │　 │　 │　 ├─ main.jsp  
@@ -80,10 +80,8 @@ dokoTsubu
 │　　　 │　 │　 │　 └─ registerView.jsp  
 │　　　 │　 │　 └─ web.xml  
 │　　　 │　 └─ index.jsp  
-│　　　 └─ resources                    // 設定ファイル用（現在未使用）  
+│　　　 └─ resources　　　　　　　　　　　// 設定ファイル用（現在未使用）  
 └─ pom.xml
-
-※resourcesは今は未使用、将来的な設定ファイル置き場予定
 
 ---
 
