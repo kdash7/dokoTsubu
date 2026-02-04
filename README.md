@@ -46,9 +46,9 @@ Java / Servlet / JSP を用いた MVC 構成で、基本的な Web アプリケ�
 
 ## ディレクトリ構成（抜粋）
 
-dokoTsubu
-├─ src
-│ └─ main
+dokoTsubu  
+├─ src  
+│　 └─ main
 │ ├─ java
 │ │ └─ smartphoneHelperApp
 │ │ ├─ MainServlet.java
